@@ -26,7 +26,6 @@ import org.apache.olingo.odata2.core.edm.provider.EdmParameterImplProv;
 import org.apache.olingo.odata2.core.edm.provider.EdmStructuralTypeImplProv;
 
 import com.axway.apim.api.apiSpecification.filter.OpenAPI3SpecificationFilter;
-import com.axway.apim.api.model.APISpecificationFilter;
 import com.axway.apim.lib.errorHandling.AppException;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -37,16 +36,12 @@ import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.PathItem.HttpMethod;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.media.ArraySchema;
-import io.swagger.v3.oas.models.media.BinarySchema;
-import io.swagger.v3.oas.models.media.BooleanSchema;
 import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.media.DateTimeSchema;
 import io.swagger.v3.oas.models.media.IntegerSchema;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
-import io.swagger.v3.oas.models.media.UUIDSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.PathParameter;
 import io.swagger.v3.oas.models.parameters.QueryParameter;
@@ -117,7 +112,7 @@ public class ODataV2Specification extends ODataSpecification {
 			return true;
 		} catch (Exception e) {
 			if(LOG.isDebugEnabled()) {
-				LOG.error("Error parsing OData specification.", e);
+				LOG.error("Error parsing OData V2 MetaData.", e);
 			}
 			return false;
 		}
@@ -433,30 +428,6 @@ public class ODataV2Specification extends ODataSpecification {
 		} else {
 			return null;
 		}
-	}
-	
-	private Schema<?> getSimpleSchema(String type) {
-		switch(type) {
-		case "Guid": 
-			return new UUIDSchema();
-		case "Int16":
-		case "Int32":
-		case "Int64":
-		case "Decimal":
-			return new IntegerSchema();
-		case "String":
-		case "Single":
-		case "Time":
-		case "DateTimeOffset":
-			return new StringSchema();
-		case "DateTime":
-			return new DateTimeSchema();
-		case "Binary":
-			return new BinarySchema();
-		case "Boolean":
-			return new BooleanSchema();
-		}
-		return null;
 	}
 	
 	private void setFunctionDocumentation(EdmFunctionImport function, Operation operation) {

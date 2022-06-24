@@ -16,6 +16,14 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.media.BinarySchema;
+import io.swagger.v3.oas.models.media.BooleanSchema;
+import io.swagger.v3.oas.models.media.DateTimeSchema;
+import io.swagger.v3.oas.models.media.IntegerSchema;
+import io.swagger.v3.oas.models.media.NumberSchema;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.StringSchema;
+import io.swagger.v3.oas.models.media.UUIDSchema;
 import io.swagger.v3.oas.models.servers.Server;
 
 public abstract class ODataSpecification extends APISpecification {
@@ -88,5 +96,33 @@ public abstract class ODataSpecification extends APISpecification {
 	@Override
 	public String getDescription() {
 		return openAPI.getInfo().getDescription();
+	}
+	
+	protected Schema<?> getSimpleSchema(String type) {
+		switch(type) {
+		case "Guid": 
+			return new UUIDSchema();
+		case "Int16":
+		case "Int32":
+		case "Int64":
+		case "Decimal":
+			return new IntegerSchema();
+		case "Double":
+			return new NumberSchema();
+		case "String":
+		case "Single":
+		case "Time":
+		case "DateTimeOffset":
+		case "GeographyPoint":
+		case "Duration":
+			return new StringSchema();
+		case "DateTime":
+			return new DateTimeSchema();
+		case "Binary":
+			return new BinarySchema();
+		case "Boolean":
+			return new BooleanSchema();
+		}
+		return null;
 	}
 }

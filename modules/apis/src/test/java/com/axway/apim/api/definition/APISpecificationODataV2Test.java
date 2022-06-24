@@ -20,7 +20,7 @@ import com.axway.apim.lib.errorHandling.ErrorCode;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class APISpecificationODataTest {
+public class APISpecificationODataV2Test {
 	
 	ObjectMapper mapper = new ObjectMapper();
 	
